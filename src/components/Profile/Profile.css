@@ -1,0 +1,128 @@
+.profile {
+    max-width: 410px;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    padding-top: 74px;
+    padding-bottom: 70px;
+
+}
+
+.profile__greeting {
+    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    text-align: center;
+    padding-bottom: 106px;
+}
+
+.profile__form {
+    width: 100%;
+    padding-bottom: 220px;
+}
+
+.profile__input-container {
+    padding-top: 17px;
+    padding-bottom: 16px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.profile__input-container:nth-child(2){
+    border: none;
+}
+
+.profile__input {
+    text-align: right;
+    border: none;
+
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #000000;
+}
+
+.profile__input-name {
+   margin: 0;
+   font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #000000; 
+}
+
+.profile__edit-button {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    border: none;
+    background-color: white;
+    margin-bottom: 16px;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+.profile__edit-button:hover {
+    opacity: 0.8;
+}
+
+.profile__logout-button {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #EE3465;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+.profile__logout-button:hover {
+    opacity: 0.8;
+}
+
+@media (max-width: 460px) {
+
+    .profile {
+        max-width: 410px;
+        display: flex;
+        margin: 0 auto;
+        flex-direction: column;
+        padding: 70px 30px 40px;
+    }
+
+    .profile__form {
+        padding-bottom: 379px;
+    }
+
+    .profile__edit-button {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__logout-button {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__greeting {
+        padding-bottom: 80px;
+    }
+}

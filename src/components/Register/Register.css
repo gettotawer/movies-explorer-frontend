@@ -47,6 +47,10 @@
     color: #FFFFFF;
 }
 
+.register__button_disabled {
+    opacity: 0.5;
+}
+
 .register__question {
     margin: 0 auto;
     font-family: 'Inter';

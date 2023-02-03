@@ -42,6 +42,15 @@
     line-height: 17px;
     text-align: center;
     color: #3456F3;
+    border: none;
+    background-color: white;
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.not-found__link:hover {
+    opacity: 0.8;
 }
 
 @media (max-width:400px) {

@@ -7,7 +7,7 @@ import { useFormWithValidation } from "../../utils/Validation";
 
 function SavedMovies(props) {
 
-  const [isChecked, setIsChecked] = React.useState(true);
+  const [isChecked, setIsChecked] = React.useState(false);
   const formValidation = useFormWithValidation();
 
   React.useEffect(()=>{
@@ -16,12 +16,14 @@ function SavedMovies(props) {
 
   const onClick = () => {
     setIsChecked(!isChecked)
-    props.handleSearchSavedMovies(formValidation.values.name, !isChecked);
+    console.log(JSON.parse(localStorage.getItem('filteredSavedMovies')))
+    props.handleClickCheckboxForSavedMovies(JSON.parse(localStorage.getItem('filteredSavedMovies')), !isChecked);
   }
 
   function handleButtonClick(e){
     e.preventDefault();
     props.handleSearchSavedMovies(formValidation.values.name, isChecked);
+    console.log(JSON.parse(localStorage.getItem('filteredSavedMovies')))
   }
 
   return (

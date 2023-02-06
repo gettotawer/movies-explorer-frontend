@@ -1,5 +1,5 @@
 import React from 'react'
-import './SavedMoviesCard.css'
+// import './SavedMoviesCard.css'
 
 function MoviesCard (props) {
     const time = Math.floor(props.time/60) === 0 ? `${props.time}м` : `${Math.floor(props.time/60)}ч ${props.time - Math.floor(props.time/60) * 60}м` ;

@@ -3,16 +3,13 @@ import './MoviesCard.css'
 
 function MoviesCard (props) {
     const time = Math.floor(props.time/60) === 0 ? `${props.time}м` : `${Math.floor(props.time/60)}ч ${props.time - Math.floor(props.time/60) * 60}м` ;
-    const [isSaved, setIsSaved] = React.useState(false);
+    const isSaved = props.savedMovies.some((movie) => movie.nameRU === props.card.nameRU)
     const [savedId, setSavedId] = React.useState();
 
     React.useEffect(() => {
         props.savedMovies.forEach((movie) => {
-           if( movie.nameRU == props.card.nameRU){
-            setIsSaved(true);
+           if( movie.nameRU === props.card.nameRU){
             setSavedId(movie._id)
-           } else {
-            setIsSaved(false)
            }
         })
     }, [props.savedMovies]);

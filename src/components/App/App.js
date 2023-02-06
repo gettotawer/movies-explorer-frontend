@@ -48,12 +48,13 @@ function App() {
           setFoundMovies(JSON.parse(localStorage.getItem('allMovies')))
         }
       }
-  }, [loggedIn]);
+  }, [loggedIn, loc]);
 
   function getMovies(){
     mainApi.getSavedMovies()
     .then((res) => {
       localStorage.setItem('allSavedMovies', JSON.stringify(res))
+      localStorage.setItem('filteredSavedMovies', JSON.stringify(res));
       setSavedMovies(res)
     }).catch((err) => console.log(err))
   }
@@ -68,8 +69,10 @@ function App() {
       }).catch((err) => console.log(err))
   };
 
-  function handleGoBack(){
-    history.goBack();
+  function handleGoBack() {
+    for(let i=0; i<2; i++) {
+      history.goBack();
+    }
   }
 
   const onRegister = (email, name, password) => {
@@ -84,6 +87,7 @@ function App() {
   const onLogin = (email, password) => {
     return Auth.authorize(email, password).then((res) => {
         auth();
+        setLoc('/movies')
         history.push('/movies')
     }).catch(()=>{
       alert('Неверный E-mail или пароль!')
@@ -108,78 +112,77 @@ function App() {
       localStorage.removeItem('searchKeyword');
       localStorage.removeItem('checkbox');
       localStorage.removeItem('allSavedMovies')
-      // localStorage.removeItem('filteredSavedMovies');
-      // localStorage.removeItem('searchKeywordForSavedMovies');
-      // localStorage.removeItem('checkboxForSavedMovies');
     });
   };
 
-  const searchMovies = (movies, filmName="", duration) => {
-    if(duration && filmName) {
-      return movies.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(filmName.toLowerCase())
-      );
-    } else if(!duration && filmName){
-      return movies.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(filmName.toLowerCase()) && movie.duration >= 40
-      );
-    } else if(!duration && !filmName){
-      console.log('qqqq')
-      return movies.filter((movie) =>
-         movie.duration >= 40
-      );
-    } else {
-      console.log('allo')
-      return movies
-    }
+  const searchMovies = (movies, filmName) => {
+    return movies.filter((movie) =>
+    movie.nameRU.toLowerCase().includes(filmName.toLowerCase())
+  );
   };
 
   const handleSearchMovies = (name, isChecked) => {
       setIsPreloaderActive(true);
       const searchArr = searchMovies(
         JSON.parse(localStorage.getItem('allMovies')),
-        name,
-        isChecked
+        name
       );
+      if(name !== ""){
+        localStorage.setItem('searchKeyword', name);
+      }
       localStorage.setItem('filteredMovies', JSON.stringify(searchArr));
-      localStorage.setItem('searchKeyword', name);
-      localStorage.setItem('checkbox', isChecked);
       if (searchArr.length === 0) {
         setTimeout(() => {
           setIsPreloaderActive(false)
-          setFoundMovies(searchArr);
+          setFoundMovies(handleSearchByDuration(searchArr, isChecked));
         }, 1000);
       } else {
         setTimeout(() => {
           setIsPreloaderActive(false)
-          setFoundMovies(searchArr);
+          setFoundMovies(handleSearchByDuration(searchArr, isChecked));
         }, 1000);
       }
   };
 
+  const handleSearchByDuration = (movies, isChecked) => {
+    if(location.pathname === "/movies"){
+      localStorage.setItem('checkbox', isChecked);
+    }
+    if(isChecked) {
+      return movies.filter((movie) =>
+         movie.duration <= 40
+      );
+    } else {
+      return movies
+    }
+  }
+
+  const handleClickCheckbox = (movies, isChecked) => {
+    setFoundMovies(handleSearchByDuration(movies, isChecked));
+  }
+
   const handleSearchSavedMovies = (name, isChecked) => {
-    getMovies()
     setIsPreloaderActive(true);
     const searchArr = searchMovies(
       JSON.parse(localStorage.getItem('allSavedMovies')),
-      name,
-      isChecked
+      name
     );
-    // localStorage.setItem('filteredSavedMovies', JSON.stringify(searchArr));
-    // localStorage.setItem('searchKeywordForSavedMovies', name);
-    // localStorage.setItem('checkboxForSavedMovies', isChecked);
+    localStorage.setItem('filteredSavedMovies', JSON.stringify(searchArr));
     if (searchArr.length === 0) {
       setTimeout(() => {
         setIsPreloaderActive(false)
-        setSavedMovies(searchArr);
+        setSavedMovies(handleSearchByDuration(searchArr, isChecked));
       }, 1000);
     } else {
       setTimeout(() => {
         setIsPreloaderActive(false)
-        setSavedMovies(searchArr);
+        setSavedMovies(handleSearchByDuration(searchArr, isChecked));
       }, 1000);
     }
 };
+const handleClickCheckboxForSavedMovies = (movies, isChecked) => {
+  setSavedMovies(handleSearchByDuration(movies, isChecked));
+}
 
   const handleSaveButtonCLick = (film) => {
     mainApi.saveFilm(film)
@@ -225,7 +228,7 @@ function App() {
               foundMovies={foundMovies}
               setFoundMovies={setFoundMovies}
               setSavedMovies={setSavedMovies}
-              
+              handleClickCheckbox={handleClickCheckbox}
           />
           <ProtectedRoute
               exact
@@ -241,6 +244,7 @@ function App() {
               handleSearchSavedMovies={handleSearchSavedMovies}
               RedirectPath="/"
               getMovies={getMovies}
+              handleClickCheckboxForSavedMovies={handleClickCheckboxForSavedMovies}
           />
           <ProtectedRoute
               exact

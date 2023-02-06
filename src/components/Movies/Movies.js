@@ -4,55 +4,57 @@ import SearchForm from "./SearchForm/SearchForm";
 import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import { useFormWithValidation } from "../../utils/Validation";
+import {AmmountOfEddingCards, AmmountOfCards} from "../../Consts/AmmountOfCards"
+import {ScreenSizes} from "../../Consts/ScreenSizes"
 
 function Movies(props) {
-  const [isChecked, setIsChecked] = React.useState(true);
+  const [isChecked, setIsChecked] = React.useState(JSON.parse(localStorage.getItem('checkbox')) || false);
   const [isButtonActive, setIsButtonActive] = React.useState(true);
   const [shownFilms, setShownFilms] = React.useState([]);
   const formValidation = useFormWithValidation();
 
   React.useEffect(()=> {
-    if (localStorage.getItem('checkbox')) {
-      setIsChecked(JSON.parse(localStorage.getItem('checkbox')));
-    }
     if (localStorage.getItem('searchKeyword')) {
       formValidation.values.name = localStorage.getItem('searchKeyword')
+    }
+    if(JSON.parse(localStorage.getItem('checkbox'))){
+      props.handleClickCheckbox(JSON.parse(localStorage.getItem('filteredMovies')), JSON.parse(localStorage.getItem('checkbox')))
     }
   },[])
 
     React.useEffect(()=> {
-        if(window.screen.width >= 1280){
-            setShownFilms(props.foundMovies.slice(0,12))
+        if(document.documentElement.clientWidth >= ScreenSizes.bigScreen){
+            setShownFilms(props.foundMovies.slice(0,AmmountOfCards.bigScreen))
             setIsButtonActive(true);
-            if(props.foundMovies.length === props.foundMovies.slice(0,12).length){
+            if(props.foundMovies.length === props.foundMovies.slice(0,AmmountOfCards.bigScreen).length){
                 setIsButtonActive(false);
             }
-        } else if (window.screen.width >= 768){
-            setShownFilms(props.foundMovies.slice(0,8))
+        } else if (document.documentElement.clientWidth > ScreenSizes.mediumScreen){
+            setShownFilms(props.foundMovies.slice(0,AmmountOfCards.mediumScreen))
             setIsButtonActive(true);
-            if(props.foundMovies.length === props.foundMovies.slice(0,8).length){
+            if(props.foundMovies.length === props.foundMovies.slice(0,AmmountOfCards.mediumScreen).length){
                 setIsButtonActive(false);
             }
         } else {
-            setShownFilms(props.foundMovies.slice(0,5))
+            setShownFilms(props.foundMovies.slice(0,AmmountOfCards.smallScreen))
             setIsButtonActive(true);
-            if(props.foundMovies.length === props.foundMovies.slice(0,5).length){
+            if(props.foundMovies.length === props.foundMovies.slice(0,AmmountOfCards.smallScreen).length){
                 setIsButtonActive(false);
             }
         }
     },[props.foundMovies])
 
     function handleShowMoreCards () {
-      if(window.screen.width >= 1280 &&  props.foundMovies.length > shownFilms.length){
+      if(document.documentElement.clientWidth >= ScreenSizes.bigScreen &&  props.foundMovies.length > shownFilms.length){
           const length = shownFilms.length
-          const spreadArr = [].concat(shownFilms,props.foundMovies.slice(length, length + 3))
+          const spreadArr = [].concat(shownFilms,props.foundMovies.slice(length, length + AmmountOfEddingCards.bigScreen))
           setShownFilms(spreadArr)
           if(props.foundMovies.length === spreadArr.length){
               setIsButtonActive(false);
           }
       } else if(props.foundMovies.length > shownFilms.length){
           const length = shownFilms.length
-          const spreadArr = [].concat(shownFilms,props.foundMovies.slice(length, length + 2))
+          const spreadArr = [].concat(shownFilms,props.foundMovies.slice(length, length + AmmountOfEddingCards.mediumAndSmallScreen))
           setShownFilms(spreadArr)
           if(props.foundMovies.length === spreadArr.length){
               setIsButtonActive(false);
@@ -63,7 +65,7 @@ function Movies(props) {
   const onClick = () => {
     setIsButtonActive(false);
     setIsChecked(!isChecked)
-    props.handleSearchMovies(formValidation.values.name, !isChecked);
+    props.handleClickCheckbox(JSON.parse(localStorage.getItem('filteredMovies')), !isChecked);
   }
 
   function handleButtonClick(e){

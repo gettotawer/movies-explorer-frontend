@@ -63,6 +63,7 @@
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-color: #EE3465;
+    opacity: 1;
 }
 
 .movies-card__save-button_saved::after {
@@ -156,7 +157,7 @@
     }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 785px) {
     .movies-card {
         box-sizing: border-box;
         grid-template-columns: 240px 52px;
@@ -238,5 +239,15 @@
         margin-right: 0px;
         font-size: 11px;
         line-height: 10px;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .movies-card__save-button {
+        opacity: 1;
+    }
+
+    .movies-card__delete-button {
+        opacity: 1;
     }
 }

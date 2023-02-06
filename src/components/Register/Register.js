@@ -25,7 +25,7 @@ function Register(props) {
         </div>
         <div className="input">
           <p className="input__name">E-mail</p>
-          <input value={formValidation.values.email || ''} onChange={formValidation.handleChange} className="input__input-field" type="email" placeholder="Введите ваш E-mail." name="email" required></input>
+          <input value={formValidation.values.email || ''} onChange={formValidation.handleChange} className="input__input-field" type="email" pattern='^[A-Za-z0-9][A-Za-z0-9\.\-_]*[A-Za-z0-9]*@([A-Za-z0-9]+([A-Za-z0-9-]*[A-Za-z0-9]+)*\.)+[A-Za-z]*$' placeholder="Введите ваш E-mail." name="email" required></input>
           <span id={`input-email-error`} className={`input__error ${formValidation.errors.email && "input__error_active"}`}>{formValidation.errors.email}</span>
         </div>
         <div className="input">

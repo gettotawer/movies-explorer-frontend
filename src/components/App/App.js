@@ -112,6 +112,7 @@ function App() {
       localStorage.removeItem('searchKeyword');
       localStorage.removeItem('checkbox');
       localStorage.removeItem('allSavedMovies')
+      localStorage.removeItem('filteredSavedMovies')
     });
   };
 

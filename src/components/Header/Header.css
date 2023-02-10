@@ -1,4 +1,8 @@
-.header_not-logged {
+.header_main-page {
+    background-color: #DDDEE3;
+}
+
+.header__open-menu-button_main-page {
     background-color: #DDDEE3;
 }
 
@@ -110,6 +114,10 @@
     transition: opacity 0.2s;
 }
 
+.header__link-account_active{
+    font-weight: 700;
+}
+
 .header__link-account:hover {
     opacity: 0.8;
 }
@@ -123,7 +131,7 @@
 .header__open-menu-button {
     display: none;
     background: none;
-    background-image: url(../../images/openmenubutton.svg);
+    background-image: url(../../images/open-menu-button.png);
     background-color: white;
     width: 44px;
     height: 44px;
@@ -135,12 +143,17 @@
 .header__close-menu-button {
     display: none;
     background-image: url(../../images/closebutton.svg);
+    background-position: 50% 50%;
     background-color: #fafafa;
     width: 22px;
     height: 22px;
     border: none;
     outline: none;
     transform: rotate(-45deg);
+}
+
+.header__open-menu-button_main-page {
+    background-color: #DDDEE3;
 }
 
 @media (max-width: 768px) {
@@ -154,8 +167,7 @@
 
     .header__links-container_logged{
         position: fixed;
-        right: -100%;
-
+        right: -200%;
         top: 0;
         height: 100vh;
         width: 520px;
@@ -168,7 +180,7 @@
         padding-top: 169px;
         padding-bottom: 92px;
         box-sizing: border-box;
-        transition: all 0.2s;
+        transition: all 0.3s;
     }
 
     .header__links-container_logged::before{
@@ -286,4 +298,8 @@
 
 .header__open-menu-button_not-logged {
     display: none;
+}
+
+.header__link-films_active {
+    font-weight: 700;
 }

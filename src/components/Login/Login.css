@@ -51,6 +51,10 @@
     color: #FFFFFF;
 }
 
+.login__button_disabled {
+    opacity: 0.5;
+}
+
 .login__question {
     margin: 0 auto;
     font-family: 'Inter';

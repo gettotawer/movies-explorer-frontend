@@ -1,5 +1,6 @@
 .footer {
     background-color: #F8F8F8;
+    /* justify-self: flex-end; */
 }
 
 .footer__container {
